@@ -11,6 +11,7 @@ const getPosts = () => {
           throw Error('no data available')
         }
         posts.value = await data.json()
+        posts.value.reverse()
       }
       catch (error) {
         error.value = error.message

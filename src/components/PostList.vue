@@ -1,7 +1,9 @@
 <template>
-    <div class='post-list'>
-        <div v-for="post in posts" :key="post.id">
-            <SinglePost :post="post"/>
+    <div class="post-list">
+        <div class="posts-container">
+            <div v-for="post in posts" :key="post.id" class="block">
+                <SinglePost :post="post"/>
+            </div>
         </div>
     </div>
 </template>
@@ -21,5 +23,9 @@ export default {
 </script>
 
 <style scoped>
-
+.posts-container{
+    display: grid;
+    grid-gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr) );
+}
 </style>

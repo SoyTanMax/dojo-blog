@@ -1,12 +1,13 @@
 <template>
-    <div class="post">
+    <div class="post box">
         <router-link :to="{name: 'Details', params: {id: post.id}}">
-            <h3>{{ post.title }}</h3>
+            <h3 class="is-size-4 has-text-weight-bold is-capitalized">{{ post.title }}</h3>
         </router-link>
-        <p>{{ snippet }}</p>
-        <span v-for="tag in post.tags" :key="tag">
-            #{{ tag }}
-        </span>     
+        <p class="is-size-7 snippet">{{ snippet }}</p>
+        <div class="tags">
+            <span v-for="tag in post.tags" :key="tag" class="tag">#{{ tag }}</span>
+        </div>
+        
     </div>
 </template>
 
@@ -26,5 +27,28 @@ export default {
 </script>
 
 <style scoped>
-
+.post{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgb(151, 64, 233);
+    border-radius: 12px;
+    padding: 24px;
+    min-height: 230px;
+}
+a{
+    color: white;
+}
+a:hover{
+    color: rgb(90, 20, 148);
+}
+.tag{
+    margin-right: 8px;
+    background: white;
+}
+.snippet{
+    margin-top: 12px;
+    margin-bottom: 12px;
+    color: white
+}
 </style>
