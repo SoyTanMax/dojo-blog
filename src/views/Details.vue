@@ -9,6 +9,9 @@
                     #{{ tag }}
                 </div>
             </div>
+            <div class="buttons is-right">
+                <button class="button is-danger" @click="deletePost">delete</button>
+            </div>
             
         </div>
         <div v-else>
@@ -20,18 +23,27 @@
 <script>
 import getPost from '../composables/getPost'
 import Spinner from '../components/Spinner.vue'
-import {useRoute} from 'vue-router'
+import {useRouter} from 'vue-router'
+import { deleteDoc, doc } from '@firebase/firestore'
+import { db } from '../services/firebase'
 
 export default {
     props: ['id'],
     components: { Spinner },
     setup (props) {
-        const route = useRoute()
-        console.log(route)
+        const router = useRouter()
 
         const {post, error, load} = getPost(props.id)
         load()
-        return {post, error}
+
+        const deletePost = async () => {
+            await deleteDoc(doc(db, "posts", props.id))
+            router.push({name: 'Home'})
+        }
+
+        
+
+        return {post, error, deletePost}
     }
 }
 </script>

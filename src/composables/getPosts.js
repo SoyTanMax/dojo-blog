@@ -1,4 +1,6 @@
+import { collection, getDocs, orderBy, query } from '@firebase/firestore'
 import {ref} from 'vue'
+import { db } from '../services/firebase'
 
 const getPosts = () => {
     const posts = ref([])
@@ -6,12 +8,11 @@ const getPosts = () => {
 
     const load = async () => {
       try{
-        let data = await fetch('http://localhost:3000/posts')
-        if(!data.ok){
-          throw Error('no data available')
-        }
-        posts.value = await data.json()
-        posts.value.reverse()
+        const q = query(collection(db, 'posts'), orderBy("createdAt", "desc"))
+        const res = await getDocs(q);
+        posts.value = res.docs.map(doc => {
+          return {...doc.data(), id: doc.id}
+        });
       }
       catch (error) {
         error.value = error.message

@@ -21,13 +21,13 @@ import PostList from '../components/PostList.vue'
 import Spinner from '../components/Spinner.vue'
 import TagCloud from '../components/TagCloud.vue'
 import { computed } from 'vue'
-import {useRoute} from 'vue-router'
+import {useRouter} from 'vue-router'
 
 export default {
   components: {PostList,Spinner,TagCloud},
   setup(){
 
-    const route = useRoute()
+    const route = useRouter()
     const { posts, error, load } = getPosts()
     load()
 

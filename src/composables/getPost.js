@@ -1,4 +1,6 @@
+import { doc, getDoc } from "@firebase/firestore";
 import { ref } from "vue";
+import { db } from "../services/firebase";
 
 const getPost = (id) => {
     const post = ref(null)
@@ -6,11 +8,13 @@ const getPost = (id) => {
 
     const load = async () => {
         try{
-            let data = await fetch("http://localhost:3000/posts/" + id)
-            if(!data.ok){
+            const res = await getDoc(doc(db, "posts", id));
+            if(!res.exists){
                 throw Error('That post does not exist')
+            } else{
+                post.value = {...res.data(), id: res.id}
             }
-            post.value = await data.json()
+            
         }
         catch (err){
             error.value = err.message
